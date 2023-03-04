@@ -32,7 +32,7 @@ jobs:
         password: ${{ secrets.GHCR_SECRET }}
 
     - name: Build Docker image
-      run: docker build -t ${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }} .
+      run: docker build -t ${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }} . -f DD
 
     - name: Tag Docker image
       run: docker tag ${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }} ${{ env.DOCKER_REGISTRY }}/${{ env.GITHUB_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }}
