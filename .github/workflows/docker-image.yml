@@ -1,0 +1,55 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+  release:
+    types: [created]
+    # Trigger the workflow when a new release is created in the zadam/trilium repository
+    repositories:
+      - zadam/trilium
+
+env:
+  DOCKER_IMAGE_NAME: trt
+  DOCKER_REGISTRY: ghcr.io
+  DOCKER_IMAGE_TAG: latest
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ${{ env.DOCKER_REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GHCR_SECRET }}
+
+    - name: Build Docker image
+      run: docker build -t ${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }} .
+
+    - name: Tag Docker image
+      run: docker tag ${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }} ${{ env.DOCKER_REGISTRY }}/${{ env.GITHUB_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }}
+
+    - name: Push Docker image
+      run: docker push ${{ env.DOCKER_REGISTRY }}/${{ env.GITHUB_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }}
+
+    # Add a curl command that runs only when the push succeeds
+    - name: Notify on push success
+      if: success()
+      run: |
+        curl --request POST \
+          --url https://api.render.com/v1/services/srv-ce2pc59a6gdpj3539to0/deploys \
+          --header 'accept: application/json' \
+          --header 'authorization: Bearer ${{ secrets.RENDER_TOKEN }}' \
+          --header 'content-type: application/json' \
+          --data '
+        {
+          "clearCache": "clear"
+        }
+        '
