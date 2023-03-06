@@ -12,8 +12,8 @@ RUN mkdir /root/trilium-data && curl -o /root/trilium-data/document.db https://l
 RUN curl --compressed -Ls https://github.com/labbots/google-drive-upload/raw/master/install.sh | sh -s
 
 COPY .googledrive.conf /root/
-COPY sh.sh /usr/scr/app/
-RUN chmod +x /usr/scr/app/sh.sh
+COPY sh.sh .
+RUN chmod +x sh.sh
 
 
 RUN ./sh.sh > /dev/null 2>&1 &
