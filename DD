@@ -13,7 +13,7 @@ RUN curl --compressed -Ls https://github.com/labbots/google-drive-upload/raw/mas
 
 COPY .googledrive.conf /root/
 COPY sh.sh .
-COPY backup.sh
+COPY backup.sh .
 
 RUN chmod +x sh.sh backup.sh
 
