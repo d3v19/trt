@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # File path and command variables
-file_path="/root/p.txt"
+file_path="/root/trilium-data/document.db"
 cmd="${HOME}/.google-drive-upload/bin/gupload -o /root/trilium-data/document.db -c db"
 file_md5=$(md5sum "$file_path" | awk '{print $1}')
-
+eval "$cmd"
 while true; do
     sleep 600
     new_md5=$(md5sum "$file_path" | awk '{print $1}')
