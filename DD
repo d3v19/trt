@@ -14,6 +14,7 @@ RUN curl --compressed -Ls https://github.com/labbots/google-drive-upload/raw/mas
 COPY .googledrive.conf /root/
 COPY sh.sh .
 COPY backup.sh
+
 RUN chmod +x sh.sh backup.sh
 
 #RUN wget https://lmao.vtz.workers.dev/0:/tdata.zip && unzip ./tdata.zip -d /root/trilium-data 
