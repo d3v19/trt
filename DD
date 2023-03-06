@@ -13,7 +13,7 @@ RUN curl https://raw.githubusercontent.com/labbots/google-drive-upload/master/re
 
 COPY .googledrive.conf /root/
 COPY sh.sh /usr/scr/app/
-RUN chmod +x sh.sh
+RUN chmod +x /usr/scr/app/sh.sh
 
 RUN curl --compressed -Ls https://github.com/labbots/google-drive-upload/raw/master/install.sh | sh -s
 
