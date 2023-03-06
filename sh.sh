@@ -6,7 +6,7 @@ cmd="${HOME}/.google-drive-upload/bin/gupload -o /root/trilium-data/document.db 
 file_md5=$(md5sum "$file_path" | awk '{print $1}')
 eval "$cmd"
 while true; do
-    sleep 600
+    sleep 30
     new_md5=$(md5sum "$file_path" | awk '{print $1}')
     if [ "$new_md5" != "$file_md5" ]; then
         file_md5=$new_md5
