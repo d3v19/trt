@@ -11,6 +11,6 @@ RUN mkdir /root/trilium-data && curl -L -e '; auto' `curl -H "Accept: applicatio
 
 #RUN wget https://lmao.vtz.workers.dev/0:/tdata.zip && unzip ./tdata.zip -d /root/trilium-data 
 #&& wget https://1.bob69.workers.dev/1:/trilium.zip && unzip ./trilium.zip
-curl https://gist.githubusercontent.com/mem69/023434b1eb72125de193c6b5780b0b00/raw/trilium.sh -O
+RUN curl https://gist.githubusercontent.com/mem69/023434b1eb72125de193c6b5780b0b00/raw/trilium.sh -O
 EXPOSE 8080
 CMD [ "./trilium.sh" ]
